@@ -665,10 +665,12 @@ jobs:
         cd rtl8812au-src
         sed -i 's/CONFIG_RTW_ANDROID = 0/CONFIG_RTW_ANDROID = 12/' Makefile
         KSRC="${{ github.workspace }}/kernel/common"
-        if [ -d "${{ github.workspace }}/kernel/out/android12-5.10/common" ]; then
-          KSRC="${{ github.workspace }}/kernel/out/android12-5.10/common"
+        KOUT="/home/runner/out/android12-5.10/common"
+        if [ -d "$KOUT" ]; then
+          KSRC="$KOUT"
         fi
-        make ARCH=arm64 KSRC="$KSRC" CROSS_COMPILE=aarch64-linux-gnu- -j"$(nproc)" 2>&1 | tail -20
+        make ARCH=arm64 KSRC="$KSRC" CC=clang CROSS_COMPILE=aarch64-linux-gnu- modules_prepare -j"$(nproc)" 2>&1 | tail -10
+        make ARCH=arm64 KSRC="$KSRC" CC=clang CROSS_COMPILE=aarch64-linux-gnu- -j"$(nproc)" 2>&1 | tail -30
         if [ ! -f 8812au.ko ]; then
           echo "WARNING: RTL8812AU .ko not found, skipping Magisk module packaging"
           exit 0
