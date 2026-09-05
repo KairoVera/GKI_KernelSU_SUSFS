@@ -668,7 +668,7 @@ jobs:
         KSRC="${{ github.workspace }}/kernel/common"
         AUTOCONF=$(find /home/runner/out -name auto.conf -path '*/include/config/auto.conf' 2>/dev/null | head -1)
         if [ -n "$AUTOCONF" ]; then
-          KSRC=$(dirname $(dirname "$AUTOCONF"))
+          KSRC=$(echo "$AUTOCONF" | sed 's|/include/config/auto.conf||')
           echo "Found kernel config at: $KSRC"
         else
           echo "auto.conf not found, running defconfig on source tree..."
