@@ -664,6 +664,9 @@ jobs:
         git clone --depth 1 https://github.com/morrownr/8812au-20210820.git rtl8812au-src
         cd rtl8812au-src
         sed -i 's/CONFIG_RTW_ANDROID = 0/CONFIG_RTW_ANDROID = 12/' Makefile
+        sed -i 's/-Wno-cast-function-type/-Wno-bad-function-cast/g' Makefile
+        sed -i 's/-Wno-enum-int-mismatch/-Wno-enum-conversion/g' Makefile
+        sed -i 's/-Wno-stringop-overread/-Wno-string-plus-int/g' Makefile
         export PATH="${{ github.workspace }}/kernel/prebuilts-master/clang/host/linux-x86/clang-r416183b/bin:${{ github.workspace }}/kernel/build/build-tools/path/linux-x86:$PATH"
         KSRC="${{ github.workspace }}/kernel/common"
         AUTOCONF=$(find /home/runner/out -name auto.conf -path '*/include/config/auto.conf' 2>/dev/null | head -1)
