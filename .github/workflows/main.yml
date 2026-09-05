@@ -103,6 +103,15 @@ on:
         description: "Performance"
         type: boolean
         default: false
+      use_kpm:
+        description: "KPM (Kernel Patch Module) support"
+        type: boolean
+        default: false
+      kpm_superkey:
+        description: "KPM superkey (required when KPM enabled; used to manage KPM modules on device)"
+        required: false
+        type: string
+        default: ""
       test_release_notes:
         description: "Render release notes preview only (skip all builds + release)"
         type: boolean
@@ -420,6 +429,7 @@ jobs:
           [ "${{ inputs.use_unicode }}" = "true" ] && FEATURES="${FEATURES}Unicode+"
           [ "${{ inputs.use_bpf }}" = "true" ] && FEATURES="${FEATURES}BPF+"
           [ "${{ inputs.use_perf }}" = "true" ] && FEATURES="${FEATURES}Perf+"
+          [ "${{ inputs.use_kpm }}" = "true" ] && FEATURES="${FEATURES}KPM+"
           echo "feature_set=${FEATURES%+}" >> "$GITHUB_OUTPUT"
 
       - name: Clone shared source repos once
@@ -639,6 +649,7 @@ jobs:
       os_patch_level: ${{ inputs.os_patch_level }}
       bypass: ${{ inputs.bypass }}
       use_cache: ${{ inputs.use_cache }}
+      kpm_superkey: ${{ inputs.kpm_superkey }}
     secrets: inherit
 
   build-android13-5-10:
@@ -668,6 +679,7 @@ jobs:
       os_patch_level: ${{ inputs.os_patch_level }}
       bypass: ${{ inputs.bypass }}
       use_cache: ${{ inputs.use_cache }}
+      kpm_superkey: ${{ inputs.kpm_superkey }}
     secrets: inherit
 
   build-android13-5-15:
@@ -697,6 +709,7 @@ jobs:
       os_patch_level: ${{ inputs.os_patch_level }}
       bypass: ${{ inputs.bypass }}
       use_cache: ${{ inputs.use_cache }}
+      kpm_superkey: ${{ inputs.kpm_superkey }}
     secrets: inherit
 
   build-android14-5-15:
@@ -726,6 +739,7 @@ jobs:
       os_patch_level: ${{ inputs.os_patch_level }}
       bypass: ${{ inputs.bypass }}
       use_cache: ${{ inputs.use_cache }}
+      kpm_superkey: ${{ inputs.kpm_superkey }}
     secrets: inherit
 
   build-android14-6-1:
@@ -755,6 +769,7 @@ jobs:
       os_patch_level: ${{ inputs.os_patch_level }}
       bypass: ${{ inputs.bypass }}
       use_cache: ${{ inputs.use_cache }}
+      kpm_superkey: ${{ inputs.kpm_superkey }}
     secrets: inherit
 
   build-android15-6-6:
@@ -784,6 +799,7 @@ jobs:
       os_patch_level: ${{ inputs.os_patch_level }}
       bypass: ${{ inputs.bypass }}
       use_cache: ${{ inputs.use_cache }}
+      kpm_superkey: ${{ inputs.kpm_superkey }}
     secrets: inherit
 
   build-android16-6-12:
@@ -813,6 +829,7 @@ jobs:
       os_patch_level: ${{ inputs.os_patch_level }}
       bypass: ${{ inputs.bypass }}
       use_cache: ${{ inputs.use_cache }}
+      kpm_superkey: ${{ inputs.kpm_superkey }}
     secrets: inherit
 
   update-verified-pins:

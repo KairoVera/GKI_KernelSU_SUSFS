@@ -66,6 +66,11 @@ on:
         required: false
         type: boolean
         default: true
+      kpm_superkey:
+        description: "KPM superkey (empty = KPM disabled)"
+        required: false
+        type: string
+        default: ""
       os_patch_level:
         description: "Optional filter: patch date (YYYY-MM), kernel sublevel, lts (LTS branch), or all"
         required: false
@@ -183,4 +188,5 @@ jobs:
       brand_name: ${{ inputs.brand_name }}
       bypass: ${{ inputs.bypass }}
       use_cache: ${{ inputs.use_cache }}
+      kpm_superkey: ${{ inputs.kpm_superkey }}
     secrets: inherit
