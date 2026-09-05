@@ -510,6 +510,18 @@ jobs:
         mv oImage Image
         echo "KPM patch applied successfully"
 
+    - name: Fetch APatch Manager
+      if: inputs.kpm_superkey != ''
+      shell: bash
+      run: |
+        set -euo pipefail
+        echo "Fetching APatch manager for KPM support..."
+        APATCH_URL=$(curl -sS https://api.github.com/repos/bmax121/APatch/releases/latest | jq -r '.assets[0].browser_download_url')
+        APATCH_NAME=$(curl -sS https://api.github.com/repos/bmax121/APatch/releases/latest | jq -r '.assets[0].name')
+        echo "Downloading: $APATCH_NAME"
+        curl -sSL -o "${{ github.workspace }}/APatch-manager.apk" "$APATCH_URL"
+        echo "APatch manager downloaded: $(ls -la ${{ github.workspace }}/APatch-manager.apk)"
+
     - name: Get Cache Stats
       uses: ./.github/actions/cache-stats
       with:
@@ -651,6 +663,14 @@ jobs:
         path: ${{ github.workspace }}/AnyKernel3/**
         if-no-files-found: ignore
         compression-level: 9
+
+    - name: Upload APatch Manager
+      if: inputs.kpm_superkey != ''
+      uses: actions/upload-artifact@v7
+      with:
+        name: ${{ steps.extract.outputs.file_name }}-APatch-Manager
+        path: ${{ github.workspace }}/APatch-manager.apk
+        if-no-files-found: ignore
 
     - name: Write Build-verified only artifact metadata
       if: success() && inputs.root_flavor != '' && inputs.nomount_commit != ''
