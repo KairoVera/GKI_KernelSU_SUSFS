@@ -41,10 +41,6 @@ on:
         required: true
         type: string
         default: All
-      brand_name:
-        description: "Kernel Branding"
-        type: string
-        default: Wild
       commit_mode:
         description: "latest = branch tips, verified = audited pins, update = build latest then promote verified pins on success"
         required: false
@@ -640,7 +636,7 @@ jobs:
       ksu_branch: ${{ needs.resolve-sources.outputs.kernelsu_commit }}
       anykernel3_commit: ${{ needs.resolve-sources.outputs.anykernel3_commit }}
       droidspaces_commit: ${{ needs.resolve-sources.outputs.droidspaces_commit }}
-      brand_name: ${{ inputs.brand_name }}
+      brand_name: KairoVera
       os_patch_level: ${{ inputs.os_patch_level }}
       bypass: ${{ inputs.bypass }}
       use_cache: ${{ inputs.use_cache }}
@@ -670,7 +666,7 @@ jobs:
       ksu_branch: ${{ needs.resolve-sources.outputs.kernelsu_commit }}
       anykernel3_commit: ${{ needs.resolve-sources.outputs.anykernel3_commit }}
       droidspaces_commit: ${{ needs.resolve-sources.outputs.droidspaces_commit }}
-      brand_name: ${{ inputs.brand_name }}
+      brand_name: KairoVera
       os_patch_level: ${{ inputs.os_patch_level }}
       bypass: ${{ inputs.bypass }}
       use_cache: ${{ inputs.use_cache }}
@@ -700,7 +696,7 @@ jobs:
       ksu_branch: ${{ needs.resolve-sources.outputs.kernelsu_commit }}
       anykernel3_commit: ${{ needs.resolve-sources.outputs.anykernel3_commit }}
       droidspaces_commit: ${{ needs.resolve-sources.outputs.droidspaces_commit }}
-      brand_name: ${{ inputs.brand_name }}
+      brand_name: KairoVera
       os_patch_level: ${{ inputs.os_patch_level }}
       bypass: ${{ inputs.bypass }}
       use_cache: ${{ inputs.use_cache }}
@@ -730,7 +726,7 @@ jobs:
       ksu_branch: ${{ needs.resolve-sources.outputs.kernelsu_commit }}
       anykernel3_commit: ${{ needs.resolve-sources.outputs.anykernel3_commit }}
       droidspaces_commit: ${{ needs.resolve-sources.outputs.droidspaces_commit }}
-      brand_name: ${{ inputs.brand_name }}
+      brand_name: KairoVera
       os_patch_level: ${{ inputs.os_patch_level }}
       bypass: ${{ inputs.bypass }}
       use_cache: ${{ inputs.use_cache }}
@@ -760,7 +756,7 @@ jobs:
       ksu_branch: ${{ needs.resolve-sources.outputs.kernelsu_commit }}
       anykernel3_commit: ${{ needs.resolve-sources.outputs.anykernel3_commit }}
       droidspaces_commit: ${{ needs.resolve-sources.outputs.droidspaces_commit }}
-      brand_name: ${{ inputs.brand_name }}
+      brand_name: KairoVera
       os_patch_level: ${{ inputs.os_patch_level }}
       bypass: ${{ inputs.bypass }}
       use_cache: ${{ inputs.use_cache }}
@@ -790,7 +786,7 @@ jobs:
       ksu_branch: ${{ needs.resolve-sources.outputs.kernelsu_commit }}
       anykernel3_commit: ${{ needs.resolve-sources.outputs.anykernel3_commit }}
       droidspaces_commit: ${{ needs.resolve-sources.outputs.droidspaces_commit }}
-      brand_name: ${{ inputs.brand_name }}
+      brand_name: KairoVera
       os_patch_level: ${{ inputs.os_patch_level }}
       bypass: ${{ inputs.bypass }}
       use_cache: ${{ inputs.use_cache }}
@@ -820,7 +816,7 @@ jobs:
       ksu_branch: ${{ needs.resolve-sources.outputs.kernelsu_commit }}
       anykernel3_commit: ${{ needs.resolve-sources.outputs.anykernel3_commit }}
       droidspaces_commit: ${{ needs.resolve-sources.outputs.droidspaces_commit }}
-      brand_name: ${{ inputs.brand_name }}
+      brand_name: KairoVera
       os_patch_level: ${{ inputs.os_patch_level }}
       bypass: ${{ inputs.bypass }}
       use_cache: ${{ inputs.use_cache }}
