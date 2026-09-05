@@ -15,10 +15,6 @@ on:
           - Pre-Release
           - Release
         default: Action
-      use_cache:
-        description: "Use ccache/bazel cache (restore/save)"
-        type: boolean
-        default: true
       bypass:
         description: "Apply kernel version-check bypass hack"
         type: boolean
@@ -639,7 +635,7 @@ jobs:
       brand_name: KairoVera
       os_patch_level: ${{ inputs.os_patch_level }}
       bypass: ${{ inputs.bypass }}
-      use_cache: ${{ inputs.use_cache }}
+      use_cache: false
       kpm_superkey: ${{ inputs.kpm_superkey }}
     secrets: inherit
 
@@ -669,7 +665,7 @@ jobs:
       brand_name: KairoVera
       os_patch_level: ${{ inputs.os_patch_level }}
       bypass: ${{ inputs.bypass }}
-      use_cache: ${{ inputs.use_cache }}
+      use_cache: false
       kpm_superkey: ${{ inputs.kpm_superkey }}
     secrets: inherit
 
@@ -699,7 +695,7 @@ jobs:
       brand_name: KairoVera
       os_patch_level: ${{ inputs.os_patch_level }}
       bypass: ${{ inputs.bypass }}
-      use_cache: ${{ inputs.use_cache }}
+      use_cache: false
       kpm_superkey: ${{ inputs.kpm_superkey }}
     secrets: inherit
 
@@ -729,7 +725,7 @@ jobs:
       brand_name: KairoVera
       os_patch_level: ${{ inputs.os_patch_level }}
       bypass: ${{ inputs.bypass }}
-      use_cache: ${{ inputs.use_cache }}
+      use_cache: false
       kpm_superkey: ${{ inputs.kpm_superkey }}
     secrets: inherit
 
@@ -759,7 +755,7 @@ jobs:
       brand_name: KairoVera
       os_patch_level: ${{ inputs.os_patch_level }}
       bypass: ${{ inputs.bypass }}
-      use_cache: ${{ inputs.use_cache }}
+      use_cache: false
       kpm_superkey: ${{ inputs.kpm_superkey }}
     secrets: inherit
 
@@ -789,7 +785,7 @@ jobs:
       brand_name: KairoVera
       os_patch_level: ${{ inputs.os_patch_level }}
       bypass: ${{ inputs.bypass }}
-      use_cache: ${{ inputs.use_cache }}
+      use_cache: false
       kpm_superkey: ${{ inputs.kpm_superkey }}
     secrets: inherit
 
@@ -819,7 +815,7 @@ jobs:
       brand_name: KairoVera
       os_patch_level: ${{ inputs.os_patch_level }}
       bypass: ${{ inputs.bypass }}
-      use_cache: ${{ inputs.use_cache }}
+      use_cache: false
       kpm_superkey: ${{ inputs.kpm_superkey }}
     secrets: inherit
 
@@ -1178,7 +1174,7 @@ jobs:
         USE_UNICODE: ${{ inputs.use_unicode }}
         USE_BPF: ${{ inputs.use_bpf }}
         USE_PERF: ${{ inputs.use_perf }}
-        USE_CACHE: ${{ inputs.use_cache }}
+        USE_CACHE: false
         KERNEL_BUILD_VERSION: ${{ inputs.kernel_build_version }}
         NOMOUNT_COMMIT: ${{ needs.resolve-sources.outputs.nomount_commit }}
         KSU_COMMIT: ${{ needs.resolve-sources.outputs.ksu_commit }}
@@ -1481,7 +1477,7 @@ jobs:
           USE_UNICODE: ${{ inputs.use_unicode }}
           USE_BPF: ${{ inputs.use_bpf }}
           USE_PERF: ${{ inputs.use_perf }}
-          USE_CACHE: ${{ inputs.use_cache }}
+          USE_CACHE: false
           KERNEL_BUILD_VERSION: ${{ inputs.kernel_build_version }}
           NOMOUNT_COMMIT: ${{ needs.resolve-sources.outputs.nomount_commit }}
           KSU_COMMIT: ${{ needs.resolve-sources.outputs.ksu_commit }}
