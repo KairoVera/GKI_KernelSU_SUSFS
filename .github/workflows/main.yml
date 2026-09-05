@@ -103,10 +103,6 @@ on:
         description: "Performance"
         type: boolean
         default: false
-      use_kpm:
-        description: "KPM (Kernel Patch Module) support"
-        type: boolean
-        default: false
       kpm_superkey:
         description: "KPM superkey (required when KPM enabled; used to manage KPM modules on device)"
         required: false
@@ -429,7 +425,6 @@ jobs:
           [ "${{ inputs.use_unicode }}" = "true" ] && FEATURES="${FEATURES}Unicode+"
           [ "${{ inputs.use_bpf }}" = "true" ] && FEATURES="${FEATURES}BPF+"
           [ "${{ inputs.use_perf }}" = "true" ] && FEATURES="${FEATURES}Perf+"
-          [ "${{ inputs.use_kpm }}" = "true" ] && FEATURES="${FEATURES}KPM+"
           echo "feature_set=${FEATURES%+}" >> "$GITHUB_OUTPUT"
 
       - name: Clone shared source repos once
