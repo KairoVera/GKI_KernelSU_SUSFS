@@ -667,6 +667,8 @@ jobs:
         sed -i 's/-Wno-cast-function-type/-Wno-bad-function-cast/g' Makefile
         sed -i 's/-Wno-enum-int-mismatch/-Wno-enum-conversion/g' Makefile
         sed -i 's/-Wno-stringop-overread/-Wno-string-plus-int/g' Makefile
+        sed -i 's/_RTL88812A/_RTL8812A/g' include/rtl8812a_sreset.h include/rtl8192e_sreset.h 2>/dev/null || true
+        sed -i '/ccflags-y += -Wno-string-plus-int/a ccflags-y += -Wno-address-of-packed-member' Makefile
         export PATH="${{ github.workspace }}/kernel/prebuilts-master/clang/host/linux-x86/clang-r416183b/bin:${{ github.workspace }}/kernel/build/build-tools/path/linux-x86:$PATH"
         KSRC="${{ github.workspace }}/kernel/common"
         AUTOCONF=$(find /home/runner/out -name auto.conf -path '*/include/config/auto.conf' 2>/dev/null | head -1)
