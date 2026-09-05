@@ -104,7 +104,7 @@ on:
         type: boolean
         default: false
       kpm_superkey:
-        description: "KPM superkey (required when KPM enabled; used to manage KPM modules on device)"
+        description: "KPM 密钥（填写即启用 KPM 功能；留空则不启用。刷机后在 APatch 管理器中输入此密钥管理 KPM 模块）"
         required: false
         type: string
         default: ""
