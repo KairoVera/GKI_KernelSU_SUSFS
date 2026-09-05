@@ -666,11 +666,15 @@ jobs:
         sed -i 's/CONFIG_RTW_ANDROID = 0/CONFIG_RTW_ANDROID = 12/' Makefile
         export PATH="${{ github.workspace }}/kernel/prebuilts-master/clang/host/linux-x86/clang-r416183b/bin:${{ github.workspace }}/kernel/build/build-tools/path/linux-x86:$PATH"
         KSRC="${{ github.workspace }}/kernel/common"
-        KOUT="/home/runner/out/android12-5.10/common"
-        if [ -d "$KOUT" ]; then
-          KSRC="$KOUT"
+        AUTOCONF=$(find /home/runner/out -name auto.conf -path '*/include/config/auto.conf' 2>/dev/null | head -1)
+        if [ -n "$AUTOCONF" ]; then
+          KSRC=$(dirname $(dirname "$AUTOCONF"))
+          echo "Found kernel config at: $KSRC"
+        else
+          echo "auto.conf not found, running defconfig on source tree..."
+          make -C "$KSRC" ARCH=arm64 CC=clang CROSS_COMPILE=aarch64-linux-gnu- defconfig 2>&1 | tail -5
+          make -C "$KSRC" ARCH=arm64 CC=clang CROSS_COMPILE=aarch64-linux-gnu- modules_prepare -j"$(nproc)" 2>&1 | tail -10
         fi
-        make -C "$KSRC" ARCH=arm64 CC=clang CROSS_COMPILE=aarch64-linux-gnu- modules_prepare -j"$(nproc)" 2>&1 | tail -10
         make ARCH=arm64 KSRC="$KSRC" CC=clang CROSS_COMPILE=aarch64-linux-gnu- -j"$(nproc)" 2>&1 | tail -30
         if [ ! -f 8812au.ko ]; then
           echo "WARNING: RTL8812AU .ko not found, skipping Magisk module packaging"
