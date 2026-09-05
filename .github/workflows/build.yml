@@ -655,6 +655,42 @@ jobs:
           fi
         } > "$SUMMARY_FILE"
 
+    - name: Build RTL8812AU WiFi Driver Module
+      shell: bash
+      run: |
+        set -euo pipefail
+        echo "Building RTL8812AU driver as Magisk module..."
+        cd "${{ github.workspace }}"
+        git clone --depth 1 https://github.com/morrownr/8812au-20210820.git rtl8812au-src
+        cd rtl8812au-src
+        sed -i 's/CONFIG_RTW_ANDROID = 0/CONFIG_RTW_ANDROID = 12/' Makefile
+        KSRC="${{ github.workspace }}/kernel/common"
+        if [ -d "${{ github.workspace }}/kernel/out/android12-5.10/common" ]; then
+          KSRC="${{ github.workspace }}/kernel/out/android12-5.10/common"
+        fi
+        make ARCH=arm64 KSRC="$KSRC" CROSS_COMPILE=aarch64-linux-gnu- -j"$(nproc)" 2>&1 | tail -20
+        if [ ! -f 8812au.ko ]; then
+          echo "WARNING: RTL8812AU .ko not found, skipping Magisk module packaging"
+          exit 0
+        fi
+        echo "Driver built: $(ls -la 8812au.ko)"
+        MAGISK_DIR="${{ github.workspace }}/rtl8812au-magisk"
+        mkdir -p "$MAGISK_DIR/system/lib/modules"
+        cp 8812au.ko "$MAGISK_DIR/system/lib/modules/"
+        printf 'id=rtl8812au_driver\nname=RTL8812AU USB WiFi Driver\nversion=v1.0\nversionCode=1\nauthor=KairoVera\ndescription=RTL8812AU USB WiFi adapter driver (auto-load on boot)\n' > "$MAGISK_DIR/module.prop"
+        printf '#!/system/bin/sh\ninsmod /system/lib/modules/8812au.ko 2>/dev/null || true\n' > "$MAGISK_DIR/service.sh"
+        chmod 755 "$MAGISK_DIR/service.sh"
+        cd "${{ github.workspace }}"
+        zip -r rtl8812au-magisk-module.zip rtl8812au-magisk/
+        echo "Magisk module packaged: $(ls -la rtl8812au-magisk-module.zip)"
+
+    - name: Upload RTL8812AU Module
+      uses: actions/upload-artifact@v7
+      with:
+        name: ${{ steps.extract.outputs.file_name }}-RTL8812AU-Driver
+        path: ${{ github.workspace }}/rtl8812au-magisk-module.zip
+        if-no-files-found: ignore
+
     - name: Upload Artifacts
       id: kernel-artifact
       uses: actions/upload-artifact@v7
