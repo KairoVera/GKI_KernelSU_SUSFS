@@ -104,7 +104,7 @@ on:
         type: boolean
         default: false
       kpm_superkey:
-        description: "KPM 密钥（填写即启用 KPM 功能；留空则不启用。刷机后在 APatch 管理器中输入此密钥管理 KPM 模块）"
+        description: "KPM superkey (fill to enable KPM; leave empty to skip. Enter this key in APatch manager after flashing to manage KPM modules)"
         required: false
         type: string
         default: ""
