@@ -465,6 +465,25 @@ jobs:
         version: ${{ inputs.version }}
         bypass: true
 
+    - name: Fix Compiler Signature
+      shell: bash
+      run: |
+        set -euo pipefail
+        SETUP_ENV="${{ github.workspace }}/kernel/build/_setup_env.sh"
+        if [ -f "$SETUP_ENV" ]; then
+          sed -i 's/^export KBUILD_BUILD_USER=.*$/export KBUILD_BUILD_USER="๓เςђคєɭ"/' "$SETUP_ENV"
+          sed -i 's/^export KBUILD_BUILD_HOST=.*$/export KBUILD_BUILD_HOST="KairoVera"/' "$SETUP_ENV"
+          echo "Fixed _setup_env.sh compiler signature"
+        fi
+        MKCOMPILE_H="${{ github.workspace }}/kernel/common/scripts/mkcompile_h"
+        if [ -f "$MKCOMPILE_H" ]; then
+          if grep -q 'LINUX_COMPILE_BY=$KBUILD_BUILD_USER' "$MKCOMPILE_H"; then
+            sed -i 's/^LINUX_COMPILE_BY=$KBUILD_BUILD_USER$/LINUX_COMPILE_BY="๓เςђคєɭ"/' "$MKCOMPILE_H"
+            sed -i 's/^LINUX_COMPILE_HOST=$KBUILD_BUILD_HOST$/LINUX_COMPILE_HOST="KairoVera"/' "$MKCOMPILE_H"
+            echo "Fixed mkcompile_h compiler signature"
+          fi
+        fi
+
     - name: Build Normal Kernel
       env:
         SOURCE_DATE_EPOCH: ${{ env.SOURCE_DATE_EPOCH }}
